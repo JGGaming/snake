@@ -32,6 +32,7 @@ let board = [];
 for( r = 0 ; r < row ; r++ ){
   board[r] = [];
   for ( c = 0 ; c < col ; c++ ){
-    board[r][c] = ( c % 2 === 0 ) ? COLOR_LIGHTGREEN : ( c % 2 === 1) ? COLOR_GREEN : console.log("error with colors") break;  
+    // create checkerboard pattern
+    board[r][c] = ( ( c + r ) % 2 === 0 ) ? COLOR_LIGHTGREEN : ( (c + r) % 2 === 1) ? COLOR_GREEN : console.log("error with colors");
   };
 };

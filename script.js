@@ -7,10 +7,10 @@ const width = cvs.width;
 const row = 20;
 const col = 20;
 const padding = 1;
-const sq = height / (row + margin * 2);
+const sq = height / (row + padding * 2);
 
 const COLOR_LIGHTGREEN = "#90EE90";
-const COLOR_GREEN = "#0F0";
+const COLOR_GREEN = "#32CD32";
 const COLOR_DARKGREEN = "#006400";
 const COLOR_BLACK = "#000000";
 const COLOR_WHITE = "#FFFFFF";
@@ -20,7 +20,7 @@ const COLOR_RED = "#F00";
 function drawSquare( x , y , color1 , color2 = color1 ){
 
   ctx.fillStyle = color1 ;
-  ctx.FillRect( x , y , sq , sq ) ;
+  ctx.fillRect( x , y , sq , sq ) ;
 
   ctx.strokeStyle = color2 ;
   ctx.lineWidth = 2 ;
@@ -40,9 +40,9 @@ for( r = 0 ; r < row ; r++ ){
 // draw game checkerboard
 function drawBoard (){
   for( r = 0 ; r < row ; r++ ){
-    for( c = 0 < c < col ; c++ ){
+    for( c = 0 ; c < col ; c++ ){
       let x = c * sq + padding ;
-      let y = c * sq + padding ;
+      let y = r * sq + padding ;
       drawSquare( x , y , board[r][c] );
     };
   };

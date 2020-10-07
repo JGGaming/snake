@@ -41,11 +41,18 @@ for( r = 0 ; r < row ; r++ ){
 function drawBoard (){
   for( r = 0 ; r < row ; r++ ){
     for( c = 0 ; c < col ; c++ ){
-      let x = c * sq + padding ;
-      let y = r * sq + padding ;
+      let x = c * sq + padding * sq ;
+      let y = r * sq + padding * sq ;
       drawSquare( x , y , board[r][c] );
     };
   };
 };
 
 drawBoard() ;
+
+// create the snake
+let snake = [] ;
+snake[0] = {
+  x : 9 * sq ,
+  y : 10 * sq ;
+};

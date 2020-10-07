@@ -16,6 +16,7 @@ const COLOR_BLACK = "#000000";
 const COLOR_WHITE = "#FFFFFF";
 const COLOR_RED = "#F00";
 
+// draw a square
 function drawSquare( x , y , color1 , color2 ){
 
   ctx.fillStyle = color1 ;
@@ -23,5 +24,14 @@ function drawSquare( x , y , color1 , color2 ){
 
   ctx.strokeStyle = color2 ;
   ctx.lineWidth = 2 ;
-  ctx.strokeRect( x , y , sq , sq ) ; 
+  ctx.strokeRect( x , y , sq , sq ) ;
+};
+
+// create the game board
+let board = [];
+for( r = 0 ; r < row ; r++ ){
+  board[r] = [];
+  for ( c = 0 ; c < col ; c++ ){
+    board[r][c] = ( c % 2 === 0 ) ? COLOR_LIGHTGREEN : ( c % 2 === 1) ? COLOR_GREEN : console.log("error with colors") break;  
+  };
 };

@@ -15,3 +15,13 @@ const COLOR_DARKGREEN = "#006400";
 const COLOR_BLACK = "#000000";
 const COLOR_WHITE = "#FFFFFF";
 const COLOR_RED = "#F00";
+
+function drawSquare( x , y , color1 , color2 ){
+
+  ctx.fillStyle = color1 ;
+  ctx.FillRect( x , y , sq , sq ) ;
+
+  ctx.strokeStyle = color2 ;
+  ctx.lineWidth = 2 ;
+  ctx.strokeRect( x , y , sq , sq ) ; 
+};

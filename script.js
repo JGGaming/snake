@@ -89,3 +89,10 @@ function drawSnake(){
 };
 
 drawSnake();
+
+// draw the food
+function drawFood(){
+  drawSquare( food.x , food.y , sq , sq , COLOR_RED , COLOR_WHITE );
+};
+
+drawFood() ; 

@@ -106,3 +106,14 @@ function drawFood(){
 };
 
 drawFood() ;
+
+// draw the score
+function drawScore(){
+  let textSize = marquee * sq / 3 * 2
+  ctx.fillStyle = COLOR_WHITE ;
+  ctx.font = textSize + "px Fantasy" ;
+  ctx.textBaseline = "middle";
+  ctx.fillText("SCORE : " + score , sq , marquee * sq / 2 ) ;
+};
+
+drawScore() ;

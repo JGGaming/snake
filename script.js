@@ -70,3 +70,7 @@ let food = {
   x : Math.floor( Math.random() * row + padding ) * sq,
   y : Math.floor( Math.random() * col + padding ) * sq
 };
+
+// create the score
+
+let score = 0 ;

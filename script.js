@@ -58,8 +58,8 @@ function drawBoard (){
 drawBoard() ;
 
 // create the snake
-// let snake = [] ;
-// snake[0] = {
-//   x : 9 * sq ,
-//   y : 10 * sq
-// };
+let snake = [] ;
+snake[0] = {
+  x : 9 * sq ,
+  y : 10 * sq
+};

@@ -11,13 +11,15 @@ const padding = 1 ;
 
 const sq = width / ( col + padding * 2 );
 
-const COLOR_LIGHTGREEN = "#90EE90";
-const COLOR_GREEN = "#32CD32";
-const COLOR_DARKGREEN = "#006400";
-const COLOR_BLACK = "#000000";
-const COLOR_WHITE = "#FFFFFF";
-const COLOR_RED = "#F00";
-const COLOR_ORANGE = "#fcba03";
+const COLOR_LIGHTGREEN = "#90EE90" ;
+const COLOR_GREEN = "#32CD32" ;
+const COLOR_DARKGREEN = "#006400" ;
+const COLOR_BLACK = "#000000" ;
+const COLOR_WHITE = "#FFFFFF" ;
+const COLOR_GRAY = "#C0C0C0" ;
+const COLOR_RED = "#F00" ;
+const COLOR_ORANGE = "#fcba03" ;
+const COLOR_LIGHTBLUE = "#87CEFA" ;
 
 // draw a square
 function drawSquare( x , y , width , height , color1 , color2 = color1 ){
@@ -44,6 +46,9 @@ for( r = 0 ; r < row ; r++ ){
 
 // draw game checkerboard
 function drawBoard (){
+
+  // draws the marquee
+  drawSquare( 0 , 0 , width , marquee * sq , COLOR_LIGHTBLUE ) ;
 
   // draws green background
   drawSquare( 0 , 0 + marquee * sq , width , height , COLOR_DARKGREEN );

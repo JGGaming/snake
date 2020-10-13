@@ -66,8 +66,6 @@ function drawBoard (){
   };
 };
 
-drawBoard() ;
-
 // create the snake
 let snake = [] ;
 snake[0] = {
@@ -98,14 +96,10 @@ function drawSnake(){
   };
 };
 
-drawSnake();
-
 // draw the food
 function drawFood(){
   drawSquare( food.x , food.y , sq , sq , COLOR_RED , COLOR_WHITE );
 };
-
-drawFood() ;
 
 // draw the score
 function drawScore(){
@@ -116,4 +110,12 @@ function drawScore(){
   ctx.fillText("SCORE : " + score , sq , marquee * sq / 2 ) ;
 };
 
-drawScore() ;
+// draw everything
+function drawGame(){
+  drawBoard();
+  drawFood();
+  drawSnake();
+  drawScore();
+};
+
+drawGame() ;

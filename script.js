@@ -63,3 +63,10 @@ snake[0] = {
   x : 9 * sq ,
   y : 10 * sq
 };
+
+// create food
+
+let food = {
+  x : Math.floor( Math.random() * row + padding ) * sq,
+  y : Math.floor( Math.random() * col + padding ) * sq
+};

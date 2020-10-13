@@ -17,14 +17,14 @@ const COLOR_WHITE = "#FFFFFF";
 const COLOR_RED = "#F00";
 
 // draw a square
-function drawSquare( x , y , color1 , color2 = color1 ){
+function drawSquare( x , y , height , width , color1 , color2 = color1 ){
 
   ctx.fillStyle = color1 ;
-  ctx.fillRect( x , y , sq , sq ) ;
+  ctx.fillRect( x , y , height , width ) ;
 
   ctx.strokeStyle = color2 ;
   ctx.lineWidth = 2 ;
-  ctx.strokeRect( x , y , sq , sq ) ;
+  ctx.strokeRect( x , y , height , width ) ;
 };
 
 // create the game board
@@ -39,11 +39,18 @@ for( r = 0 ; r < row ; r++ ){
 
 // draw game checkerboard
 function drawBoard (){
+  // draws green background
+  drawSquare( 0 , 0 , height , width , COLOR_DARKGREEN );
+
+  // draws border around board
+  drawSquare( sq - 4 , sq - 4 , sq * row + 8 , sq * row + 8 , COLOR_BLACK );
+
+  // draws checkered patterened board
   for( r = 0 ; r < row ; r++ ){
     for( c = 0 ; c < col ; c++ ){
       let x = c * sq + padding * sq ;
       let y = r * sq + padding * sq ;
-      drawSquare( x , y , board[r][c] );
+      drawSquare( x , y , sq , sq , board[r][c] );
     };
   };
 };
@@ -51,8 +58,8 @@ function drawBoard (){
 drawBoard() ;
 
 // create the snake
-let snake = [] ;
-snake[0] = {
-  x : 9 * sq ,
-  y : 10 * sq ;
-};
+// let snake = [] ;
+// snake[0] = {
+//   x : 9 * sq ,
+//   y : 10 * sq
+// };

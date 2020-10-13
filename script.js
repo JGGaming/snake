@@ -15,6 +15,7 @@ const COLOR_DARKGREEN = "#006400";
 const COLOR_BLACK = "#000000";
 const COLOR_WHITE = "#FFFFFF";
 const COLOR_RED = "#F00";
+const COLOR_ORANGE = "#fcba03";
 
 // draw a square
 function drawSquare( x , y , height , width , color1 , color2 = color1 ){
@@ -60,8 +61,9 @@ drawBoard() ;
 // create the snake
 let snake = [] ;
 snake[0] = {
-  x : 9 * sq ,
-  y : 10 * sq
+  x : Math.floor(( col * sq ) / 2) + padding ,
+  y : Math.floor(( row * sq ) / 2) + padding ,
+
 };
 
 // create food
@@ -74,3 +76,16 @@ let food = {
 // create the score
 
 let score = 0 ;
+
+// draw the snake
+function drawSnake(){
+  for( let i = 0 ; i < snake.length ; i++ ){
+    ctx.fillStyle = ( i == 0 ) ? COLOR_ORANGE : COLOR_WHITE ;
+    ctx.fillRect( snake[i].x , snake[i].y , sq , sq ) ;
+
+    ctx.strokeStyle = COLOR_BLACK ;
+    ctx.strokeRect( snake[i].x , snake[i].y , sq , sq )
+  };
+};
+
+drawSnake();

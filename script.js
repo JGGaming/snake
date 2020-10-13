@@ -4,10 +4,12 @@ const ctx = cvs.getContext("2d");
 const height = cvs.height;
 const width = cvs.width;
 
-const row = 20;
-const col = 20;
-const padding = 1;
-const sq = height / (row + padding * 2);
+const row = 20 ;
+const col = 20 ;
+const marquee = row / 6 ;
+const padding = 1 ;
+
+const sq = width / ( col + padding * 2 );
 
 const COLOR_LIGHTGREEN = "#90EE90";
 const COLOR_GREEN = "#32CD32";
@@ -18,15 +20,17 @@ const COLOR_RED = "#F00";
 const COLOR_ORANGE = "#fcba03";
 
 // draw a square
-function drawSquare( x , y , height , width , color1 , color2 = color1 ){
+function drawSquare( x , y , width , height , color1 , color2 = color1 ){
 
   ctx.fillStyle = color1 ;
-  ctx.fillRect( x , y , height , width ) ;
+  ctx.fillRect( x , y , width , height ) ;
 
   ctx.strokeStyle = color2 ;
   ctx.lineWidth = 2 ;
-  ctx.strokeRect( x , y , height , width ) ;
+  ctx.strokeRect( x , y , width , height ) ;
 };
+
+//
 
 // create the game board
 let board = [];
@@ -40,17 +44,18 @@ for( r = 0 ; r < row ; r++ ){
 
 // draw game checkerboard
 function drawBoard (){
+
   // draws green background
-  drawSquare( 0 , 0 , height , width , COLOR_DARKGREEN );
+  drawSquare( 0 , 0 + marquee * sq , width , height , COLOR_DARKGREEN );
 
   // draws border around board
-  drawSquare( sq - 4 , sq - 4 , sq * row + 8 , sq * row + 8 , COLOR_BLACK );
+  drawSquare( sq - 4 , ( sq - 4 ) + marquee * sq , sq * row + 8 , sq * row + 8 , COLOR_BLACK );
 
   // draws checkered patterened board
   for( r = 0 ; r < row ; r++ ){
     for( c = 0 ; c < col ; c++ ){
-      let x = c * sq + padding * sq ;
-      let y = r * sq + padding * sq ;
+      let x = ( c + padding ) * sq ;
+      let y = ( r + padding + marquee ) * sq ;
       drawSquare( x , y , sq , sq , board[r][c] );
     };
   };
@@ -61,16 +66,16 @@ drawBoard() ;
 // create the snake
 let snake = [] ;
 snake[0] = {
-  x : Math.floor(( col * sq ) / 2) + padding ,
-  y : Math.floor(( row * sq ) / 2) + padding ,
+  x : Math.floor(( col * sq ) / 2) + padding * sq ,
+  y : Math.floor(( row * sq ) / 2) + padding * sq + marquee * sq ,
 
 };
 
 // create food
 
 let food = {
-  x : Math.floor( Math.random() * row + padding ) * sq,
-  y : Math.floor( Math.random() * col + padding ) * sq
+  x : ( Math.floor( Math.random() * col ) + padding ) * sq,
+  y : ( Math.floor( Math.random() * row ) + padding + marquee ) * sq
 };
 
 // create the score
@@ -95,4 +100,4 @@ function drawFood(){
   drawSquare( food.x , food.y , sq , sq , COLOR_RED , COLOR_WHITE );
 };
 
-drawFood() ; 
+drawFood() ;

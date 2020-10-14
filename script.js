@@ -6,16 +6,17 @@ const width = cvs.width;
 
 const row = 20 ;
 const col = 20 ;
-const marquee = row / 6 ;
+const marquee = Math.floor( row / 6 );
 const padding = 1 ;
 
-const sq = width / ( col + padding * 2 );
+const sq = Math.floor( width / ( col + padding * 2 ) );
 
 const COLOR_LIGHTGREEN = "#90EE90" ;
 const COLOR_GREEN = "#32CD32" ;
 const COLOR_DARKGREEN = "#006400" ;
 const COLOR_RED = "#F00" ;
 const COLOR_ORANGE = "#fcba03" ;
+const COLOR_YELLOW = "#FFFF00" ;
 const COLOR_LIGHTBLUE = "#87CEFA" ;
 const COLOR_BLACK = "#000000" ;
 const COLOR_WHITE = "#FFFFFF" ;
@@ -71,8 +72,8 @@ function drawBoard (){
 // create the snake
 let snake = [] ;
 snake[0] = {
-  x : Math.floor(( col * sq ) / 2) + padding * sq ,
-  y : Math.floor(( row * sq ) / 2) + padding * sq + marquee * sq ,
+  x : ( Math.floor(( col ) / 2) + padding ) * sq ,
+  y : ( Math.floor(( row ) / 2) + padding + marquee) * sq ,
 
 };
 
@@ -89,11 +90,12 @@ let score = 0 ;
 
 // draw the snake
 function drawSnake(){
+
   for( let i = 0 ; i < snake.length ; i++ ){
-    ctx.fillStyle = COLOR_WHITE ;
+    ctx.fillStyle = COLOR_RED ;
     ctx.fillRect( snake[i].x , snake[i].y , sq , sq ) ;
 
-    ctx.strokeStyle = COLOR_RED ;
+    ctx.strokeStyle = COLOR_YELLOW ;
     ctx.strokeRect( snake[i].x , snake[i].y , sq , sq )
   };
 
@@ -101,8 +103,16 @@ function drawSnake(){
   let snakeX = snake[0].x ;
   let snakeY = snake[0].y ;
 
-  // remove the tail
-  snake.pop() ;
+  // the snake eats food
+  if( snakeX == food.x && snakeY == food.y){
+    score++
+
+    food.x = ( Math.floor( Math.random() * col ) + padding ) * sq,
+    food.y = ( Math.floor( Math.random() * row ) + padding + marquee ) * sq
+  }else {
+    // remove the tail
+    snake.pop() ;
+  };
 
   // which direction
   if ( d == "LEFT"){
@@ -121,12 +131,16 @@ function drawSnake(){
     y : snakeY
   };
 
+  if ( snakeX < sq || snakeX > col * sq || snakeY < ( marquee + padding ) * sq || snakeY > ( marquee + row ) * sq ){
+    clearInterval(game) ;
+  };
+
   snake.unshift(newHead) ;
 };
 
 // draw the food
 function drawFood(){
-  drawSquare( food.x , food.y , sq , sq , COLOR_RED , COLOR_WHITE );
+  drawSquare( food.x , food.y , sq , sq , COLOR_BLACK , COLOR_WHITE );
 };
 
 // draw the score
@@ -161,7 +175,7 @@ function drawGame(){
   drawBoard();
   drawSnake();
   drawFood();
-  drawScore();
+  drawScore() ;
 };
 
 drawGame() ;

@@ -14,14 +14,14 @@ const sq = width / ( col + padding * 2 );
 const COLOR_LIGHTGREEN = "#90EE90" ;
 const COLOR_GREEN = "#32CD32" ;
 const COLOR_DARKGREEN = "#006400" ;
+const COLOR_RED = "#F00" ;
+const COLOR_ORANGE = "#fcba03" ;
+const COLOR_LIGHTBLUE = "#87CEFA" ;
 const COLOR_BLACK = "#000000" ;
 const COLOR_WHITE = "#FFFFFF" ;
 const COLOR_LIGHTGRAY = "#DCDCDC" ;
 const COLOR_GRAY = "#C0C0C0" ;
 const COLOR_DARKGRAY = "#808080" ;
-const COLOR_RED = "#F00" ;
-const COLOR_ORANGE = "#fcba03" ;
-const COLOR_LIGHTBLUE = "#87CEFA" ;
 
 // draw a square
 function drawSquare( x , y , width , height , color1 , color2 = color1 ){
@@ -96,6 +96,32 @@ function drawSnake(){
     ctx.strokeStyle = COLOR_RED ;
     ctx.strokeRect( snake[i].x , snake[i].y , sq , sq )
   };
+
+  // old head position
+  let snakeX = snake[0].x ;
+  let snakeY = snake[0].y ;
+
+  // remove the tail
+  snake.pop() ;
+
+  // which direction
+  if ( d == "LEFT"){
+    snakeX -= sq ;
+  } else if ( d == "UP"){
+    snakeY -= sq ;
+  } else if ( d == "RIGHT"){
+    snakeX += sq ;
+  } else if ( d == "DOWN"){
+    snakeY += sq ;
+  };
+
+  // add new head
+  let newHead = {
+    x : snakeX ,
+    y : snakeY
+  };
+
+  snake.unshift(newHead) ;
 };
 
 // draw the food
@@ -118,13 +144,14 @@ let d ;
 document.addEventListener( "keydown" , direction );
 
 function direction(event){
-  if( event.keyCode === 37 ){
+  let key = event.keyCode ;
+  if( key === 37 && d != "RIGHT" ){
     d = "LEFT" ;
-  } else if( event.keyCode === 38 ){
+  } else if( key === 38 && d != "DOWN" ){
     d = "UP" ;
-  } else if( event.keyCode === 39 ){
+  } else if( key === 39 && d != "LEFT" ){
     d = "RIGHT" ;
-  } else if( event.keyCode === 40 ){
+  } else if( key === 40 && d != "UP" ){
     d = "DOWN" ;
   };
 };
@@ -132,9 +159,11 @@ function direction(event){
 // draw everything
 function drawGame(){
   drawBoard();
-  drawFood();
   drawSnake();
+  drawFood();
   drawScore();
 };
 
 drawGame() ;
+
+let game = setInterval( drawGame , 100 ) ;

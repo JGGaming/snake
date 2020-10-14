@@ -112,6 +112,23 @@ function drawScore(){
   ctx.fillText("SCORE : " + score , sq , marquee * sq / 2 ) ;
 };
 
+// control the snake
+let d ;
+
+document.addEventListener( "keydown" , direction );
+
+function direction(event){
+  if( event.keyCode === 37 ){
+    d = "LEFT" ;
+  } else if( event.keyCode === 38 ){
+    d = "UP" ;
+  } else if( event.keyCode === 39 ){
+    d = "RIGHT" ;
+  } else if( event.keyCode === 40 ){
+    d = "DOWN" ;
+  };
+};
+
 // draw everything
 function drawGame(){
   drawBoard();

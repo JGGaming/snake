@@ -16,7 +16,9 @@ const COLOR_GREEN = "#32CD32" ;
 const COLOR_DARKGREEN = "#006400" ;
 const COLOR_BLACK = "#000000" ;
 const COLOR_WHITE = "#FFFFFF" ;
+const COLOR_LIGHTGRAY = "#DCDCDC" ;
 const COLOR_GRAY = "#C0C0C0" ;
+const COLOR_DARKGRAY = "#808080" ;
 const COLOR_RED = "#F00" ;
 const COLOR_ORANGE = "#fcba03" ;
 const COLOR_LIGHTBLUE = "#87CEFA" ;
@@ -40,7 +42,7 @@ for( r = 0 ; r < row ; r++ ){
   board[r] = [];
   for ( c = 0 ; c < col ; c++ ){
     // create checkerboard pattern
-    board[r][c] = ( ( c + r ) % 2 === 0 ) ? COLOR_LIGHTGREEN : ( (c + r) % 2 === 1) ? COLOR_GREEN : console.log("error with colors");
+    board[r][c] = ( ( c + r ) % 2 === 0 ) ? COLOR_LIGHTGRAY : ( (c + r) % 2 === 1) ? COLOR_GRAY : console.log("error with colors");
   };
 };
 
@@ -48,10 +50,10 @@ for( r = 0 ; r < row ; r++ ){
 function drawBoard (){
 
   // draws the marquee
-  drawSquare( 0 , 0 , width , marquee * sq , COLOR_LIGHTBLUE ) ;
+  drawSquare( 0 , 0 , width , marquee * sq , COLOR_BLACK ) ;
 
-  // draws green background
-  drawSquare( 0 , 0 + marquee * sq , width , height , COLOR_DARKGREEN );
+  // draws background
+  drawSquare( 0 , 0 + marquee * sq , width , height , COLOR_DARKGRAY );
 
   // draws border around board
   drawSquare( sq - 4 , ( sq - 4 ) + marquee * sq , sq * row + 8 , sq * row + 8 , COLOR_BLACK );
@@ -88,10 +90,10 @@ let score = 0 ;
 // draw the snake
 function drawSnake(){
   for( let i = 0 ; i < snake.length ; i++ ){
-    ctx.fillStyle = ( i == 0 ) ? COLOR_ORANGE : COLOR_WHITE ;
+    ctx.fillStyle = COLOR_WHITE ;
     ctx.fillRect( snake[i].x , snake[i].y , sq , sq ) ;
 
-    ctx.strokeStyle = COLOR_BLACK ;
+    ctx.strokeStyle = COLOR_RED ;
     ctx.strokeRect( snake[i].x , snake[i].y , sq , sq )
   };
 };

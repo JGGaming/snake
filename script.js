@@ -24,6 +24,9 @@ const COLOR_LIGHTGRAY = "#DCDCDC" ;
 const COLOR_GRAY = "#C0C0C0" ;
 const COLOR_DARKGRAY = "#808080" ;
 
+let gameOver = false ;
+let cooldown = false ;
+
 // draw a square
 function drawSquare( x , y , width , height , color1 , color2 = color1 ){
 
@@ -125,17 +128,21 @@ function drawSnake(){
     snakeY += sq ;
   };
 
+  if ( snakeX < sq || snakeX > col * sq || snakeY < ( marquee + padding ) * sq || snakeY > ( marquee + row ) * sq ){
+    gameOver = true ;
+    clearInterval(game) ;
+  };
+
   // add new head
   let newHead = {
     x : snakeX ,
     y : snakeY
   };
 
-  if ( snakeX < sq || snakeX > col * sq || snakeY < ( marquee + padding ) * sq || snakeY > ( marquee + row ) * sq ){
-    clearInterval(game) ;
-  };
-
   snake.unshift(newHead) ;
+
+  // refresh button press
+  cooldown = false ;
 };
 
 // draw the food
@@ -145,7 +152,7 @@ function drawFood(){
 
 // draw the score
 function drawScore(){
-  let textSize = marquee * sq / 3 * 2
+  let textSize = marquee * sq / 4 * 2
   ctx.fillStyle = COLOR_WHITE ;
   ctx.font = textSize + "px Fantasy" ;
   ctx.textBaseline = "middle";
@@ -158,15 +165,20 @@ let d ;
 document.addEventListener( "keydown" , direction );
 
 function direction(event){
-  let key = event.keyCode ;
-  if( key === 37 && d != "RIGHT" ){
-    d = "LEFT" ;
-  } else if( key === 38 && d != "DOWN" ){
-    d = "UP" ;
-  } else if( key === 39 && d != "LEFT" ){
-    d = "RIGHT" ;
-  } else if( key === 40 && d != "UP" ){
-    d = "DOWN" ;
+  if( gameOver != true && cooldown != true ){
+    let key = event.keyCode ;
+
+    if( key === 37 && d != "RIGHT" ){
+      d = "LEFT" ;
+    } else if( key === 38 && d != "DOWN" ){
+      d = "UP" ;
+    } else if( key === 39 && d != "LEFT" ){
+      d = "RIGHT" ;
+    } else if( key === 40 && d != "UP" ){
+      d = "DOWN" ;
+    };
+
+    cooldown = true ;
   };
 };
 
@@ -176,8 +188,7 @@ function drawGame(){
   drawSnake();
   drawFood();
   drawScore() ;
-};
 
-drawGame() ;
+};
 
 let game = setInterval( drawGame , 100 ) ;

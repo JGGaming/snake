@@ -87,6 +87,8 @@ let food = {
   y : ( Math.floor( Math.random() * row ) + padding + marquee ) * sq
 };
 
+
+
 // create the score
 
 let score = 0 ;
@@ -98,6 +100,29 @@ function drawSnake(){
     ctx.fillStyle = COLOR_RED ;
     ctx.fillRect( snake[i].x , snake[i].y , sq , sq ) ;
 
+    if( i == 0 ){
+
+      let factorX ;
+      let factorY ;
+      if ( d == "LEFT"){
+        ctx.fillStyle = COLOR_BLACK ;
+        ctx.fillRect( snake[i].x + sq /5 * 3 , snake[i].y + sq / 5 * 1 , sq / 5 , sq / 5 )
+        ctx.fillRect( snake[i].x + sq /5 * 3 , snake[i].y + sq / 5 * 3 , sq / 5 , sq / 5 )
+      } else if ( d == "UP"){
+        ctx.fillStyle = COLOR_BLACK ;
+        ctx.fillRect( snake[i].x + sq /5 * 1 , snake[i].y + sq / 5 * 3 , sq / 5 , sq / 5 )
+        ctx.fillRect( snake[i].x + sq /5 * 3 , snake[i].y + sq / 5 * 3 , sq / 5 , sq / 5 )
+      } else if ( d == "RIGHT"){
+        ctx.fillStyle = COLOR_BLACK ;
+        ctx.fillRect( snake[i].x + sq /5 * 1 , snake[i].y + sq / 5 * 1 , sq / 5 , sq / 5 )
+        ctx.fillRect( snake[i].x + sq /5 * 1 , snake[i].y + sq / 5 * 3 , sq / 5 , sq / 5 )
+      } else if ( d == "DOWN"){
+        ctx.fillStyle = COLOR_BLACK ;
+        ctx.fillRect( snake[i].x + sq /5 * 1 , snake[i].y + sq / 5 * 1 , sq / 5 , sq / 5 )
+        ctx.fillRect( snake[i].x + sq /5 * 3 , snake[i].y + sq / 5 * 1 , sq / 5 , sq / 5 )
+      };
+    };
+
     ctx.strokeStyle = COLOR_YELLOW ;
     ctx.strokeRect( snake[i].x , snake[i].y , sq , sq )
   };
@@ -105,17 +130,6 @@ function drawSnake(){
   // old head position
   let snakeX = snake[0].x ;
   let snakeY = snake[0].y ;
-
-  // the snake eats food
-  if( snakeX == food.x && snakeY == food.y){
-    score++
-
-    food.x = ( Math.floor( Math.random() * col ) + padding ) * sq,
-    food.y = ( Math.floor( Math.random() * row ) + padding + marquee ) * sq
-  }else {
-    // remove the tail
-    snake.pop() ;
-  };
 
   // which direction
   if ( d == "LEFT"){
@@ -128,9 +142,15 @@ function drawSnake(){
     snakeY += sq ;
   };
 
-  if ( snakeX < sq || snakeX > col * sq || snakeY < ( marquee + padding ) * sq || snakeY > ( marquee + row ) * sq ){
-    gameOver = true ;
-    clearInterval(game) ;
+  // the snake eats food
+  if( snakeX == food.x && snakeY == food.y){
+    score++
+
+    food.x = ( Math.floor( Math.random() * col ) + padding ) * sq,
+    food.y = ( Math.floor( Math.random() * row ) + padding + marquee ) * sq
+  } else {
+    // remove the tail
+    snake.pop() ;
   };
 
   // add new head
@@ -139,6 +159,14 @@ function drawSnake(){
     y : snakeY
   };
 
+  // gameover
+  if ( snakeX < sq || snakeX > col * sq || snakeY < ( marquee + padding ) * sq || snakeY > ( marquee + row ) * sq || collision( newHead , snake ) ){
+    gameOver = true ;
+    clearInterval(game) ;
+  };
+
+  // add new head to snake array
+
   snake.unshift(newHead) ;
 
   // refresh button press
@@ -146,13 +174,22 @@ function drawSnake(){
 };
 
 // draw the food
-function drawFood(){
-  drawSquare( food.x , food.y , sq , sq , COLOR_BLACK , COLOR_WHITE );
+function drawFood( obj , array ){
+  for( let i = 0 ; i < array.length ; i++ ){
+    if( obj.x == array[i].x && obj.y == array[i].y ){
+      food.x = ( Math.floor( Math.random() * col ) + padding ) * sq,
+      food.y = ( Math.floor( Math.random() * row ) + padding + marquee ) * sq
+
+      drawFood( obj , array ) ;
+    } else {
+      drawSquare( food.x , food.y , sq , sq , COLOR_BLACK , COLOR_WHITE );
+    };
+  };
 };
 
 // draw the score
 function drawScore(){
-  let textSize = marquee * sq / 4 * 2
+  let textSize = marquee * sq / 4 * 2 ;
   ctx.fillStyle = COLOR_WHITE ;
   ctx.font = textSize + "px Fantasy" ;
   ctx.textBaseline = "middle";
@@ -182,11 +219,21 @@ function direction(event){
   };
 };
 
+// check collision function
+function collision( head , array ){
+  for( let i = 0 ; i < array.length ; i++ ){
+    if( head.x == array[i].x && head.y == array[i].y ){
+      return true ;
+    };
+  };
+  return false ;
+};
+
 // draw everything
 function drawGame(){
   drawBoard();
+  drawFood( food , snake );
   drawSnake();
-  drawFood();
   drawScore() ;
 
 };
